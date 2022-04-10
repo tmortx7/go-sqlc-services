@@ -1,7 +1,9 @@
 DB_URL=postgres://root:root@localhost:5432/c_services?sslmode=disable
-
 postgres:
 	docker run --name postgres14 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:14-alpine
+
+pgadmin:
+	docker run -p 5050:80 -e 'PGADMIN_DEFAULT_EMAIL=admin@admin.com' -e 'PGADMIN_DEFAULT_PASSWORD=root' -d dpage/pgadmin4
 
 mysql:
 	docker run --name mysql8 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:8
@@ -12,13 +14,19 @@ createdb:
 dropdb:
 	docker exec -it postgres14 dropdb c_services
 
+migrateinit:
+	migrate create -ext sql -dir db/migration -seq init_schema
+
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
 migratedown:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down
 
+sqlc:
+	sqlc generate
+
 server:
 	go run main.go
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc server
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc server pgadmin

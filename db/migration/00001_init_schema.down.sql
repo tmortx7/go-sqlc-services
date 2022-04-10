@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS action_required;
+DROP TABLE IF EXISTS calls;
+DROP TABLE IF EXISTS action_catalog;
+DROP TABLE IF EXISTS alerted_service
+DROP TABLE IF EXISTS emergency_service
+DROP TABLE IF EXISTS alert_service
+DROP TABLE IF EXISTS operator
+DROP TABLE IF EXISTS city
+DROP TABLE IF EXISTS phone_number
+DROP TABLE IF EXISTS users
+DROP TABLE IF EXISTS sessions
